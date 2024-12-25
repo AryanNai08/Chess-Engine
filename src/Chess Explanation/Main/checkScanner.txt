@@ -1,0 +1,101 @@
+The CheckScanner class is designed to evaluate chess positions for potential threats to a king and determine whether the game is over. It uses various methods to scan the board for pieces that can attack the king and validates possible moves to assess checkmate or stalemate conditions.
+
+
+@@ package and imports
+
+it is part of main package and import pieces package Piece class to check threats to king for checkmate.
+
+@@ Class and constructer
+
+in the constructer the board object is pass as an argument.
+
+@@ Method: isKingChecked
+
+Determines if the king is in check after a given move.
+
+	logic:
+	
+	Identifies the king's position.
+	
+	Adjusts the position if the move involves the king.
+	
+	Checks for threats from all piece types using directional methods like 	hitByRook, hitByBishop, etc 
+
+@@ Method:hitByRook
+
+it Checks if the king is threatened by a rook or queen in straight-line directions (up, down, left, right).
+
+	Details:
+	
+	Iterates in the specified direction using colVal and rowVal.
+	
+	Stops upon encountering another piece and verifies if it is an enemy rook 	or 	queen.
+
+@@ Method:hitByBishop
+
+it Checks if the king is threatened by a bishop or queen in diagonal directions.
+
+	Details:
+	Similar to hitByRook, but iterates diagonally based on colVal and rowVal.
+
+@@ Method:hitByknight
+
+Purpose: Checks if the king is threatened by a knight.
+	
+	Details:
+	
+	Evaluates all possible knight moves from the king's position.
+
+	Calls checkKnight to verify if a knight at each position is a threat.
+
+@@ Method:checkKnight
+
+it Validates if a piece is an enemy knight threatening the king.
+	
+	Details:
+	
+	Ensures the piece is a knight, on the opposite team, and not the selected piece.
+
+@@ Method: hitByking
+
+Purpose: Checks if the king is threatened by an enemy king in adjacent squares.
+
+	Details:
+Iterates over all adjacent squares and calls checkKing to confirm threats.
+
+
+@@ Method:checkking
+
+Purpose: Validates if a piece is an enemy king threatening the current king.
+	
+	Details:
+
+	Ensures the piece is a king and on the opposite team.
+
+@@ Method:hitByPawn
+
+Purpose: Checks if the king is threatened by a pawn.
+
+	Details:
+
+	Adjusts threat detection based on the pawn's color and calls checkPawn
+
+@@ Method:checkPawn
+
+Purpose: Validates if a piece is an enemy pawn threatening the king.
+	
+	Details:
+	
+	Ensures the piece is a pawn, on the opposite team, and positioned diagonally to the king.
+
+@@ Method:isGameOver
+
+Purpose: Determines if the game is over due to checkmate or stalemate.
+
+	Details:
+
+	Iterates over all pieces on the king's team.
+
+	Checks if any piece has a valid move that avoids check.
+
+	Returns true if no such move exists, indicating game over.

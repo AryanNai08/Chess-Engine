@@ -1,0 +1,65 @@
+Queen is the most important part of game which is use to attack the opponent pieces and used to stronger the defense of own side. Queen is a combination of the Bishop and Rook because it can move diagonally like a bishop  as well as horizontal and vertical like a rook.
+
+@@ Package and Import
+
+Queen is a part of piece package and it import board to add piece to the board bufferImage to get the pawn symbol from the piece image.
+
+
+@@ Class and constructer
+
+Queen class extends piece class and create constructer and use all variable of piece class as argument to define its structure.
+
+	Sprite Setup:
+
+	Extracts the Queen's image from the sprite sheet, using different rows for 	white and black Queens.
+	Scales the image to fit the board's tiles.
+
+
+@@ Method: isValidMovement 
+
+this method ensure that Queen can move anywhere in same column(horizontal) and same row(vertical) if there is no obsticals in between.
+
+Horizontal, Vertical, and Diagonal Moves:
+
+The Queen can move any number of squares along a row (this.row == row), column (this.col == col), or diagonal (Math.abs(this.col - col) == Math.abs(this.row - row)).
+
+
+Collision Check:
+
+Ensures the path to the target square is clear using moveCollidesWithPiece if not occur than return true.
+
+	Example:
+	
+	Straight-Line Move:
+
+	Queen at (4, 4):
+	Target: (4, 7) (vertical move down).
+	If squares (4, 5) and (4, 6) are empty, the move is valid.
+	If any square contains a piece, the move is invalid.
+
+	Diagonal Move:
+
+	Queen at (4, 4):
+	Target: (6, 6) (diagonal move).
+	If squares (5, 5) is empty, the move is valid.
+	If a piece is at (5, 5), the move is invalid.
+	Friendly Piece at Target:
+
+	Queen at (4, 4), friendly piece at (6, 6):
+	The move is invalid even if the path is clear.
+
+
+@@ Method: moveCollidesWithPiece
+
+this is ensure that queen cannot parse any pieces if it can place in between the destination of queen target.
+
+the logic for it is a combination of rook moveCollidesWithPiece and bishop moveCollidesWithPiece method logic because queen can move both like bishop and rook so there combine logic ensure that queen cannot parse any pieces.
+
+just a additional thing is that 
+			// Ensure the target square is not occupied by a friendly piece
+
+			Friendly Piece at Target:
+
+			A Queen cannot capture its own team's piece.
+
+	for logic of this we need to get the targeted piece from the board and if the targeted piece and queen is of same team than not allow queen to capture that piece.

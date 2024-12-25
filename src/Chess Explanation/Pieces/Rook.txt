@@ -1,0 +1,81 @@
+Rook is the part of royal family and the second most important part of the game after the queen. the rook can move in both horizontal and vertical direction.
+
+
+@@ Package and Import
+
+Rook is a part of piece package and it import board to add piece to the board bufferImage to get the pawn symbol from the piece image.
+
+
+@@ Class and constructer
+
+Rook class extends piece class and create constructer and use all variable of piece class as argument to define its structure.
+	
+	Subimage:
+	this.sprite:
+
+	Extracts the Pawn's image from the sprite sheet and scales it to fit the 	board's tile size.
+	Uses 4 * sheetscale to select the correct image for a Pawn from the sprite 	sheet.
+
+
+@@ Method: isValidMovement 
+
+this method ensure that rook can move anywhere in same column(horizontal) and same row(vertical) if there is no obsticals in between.
+
+	Logic:
+
+	this.col == col: Movement along the same column (vertical).
+	this.row == row: Movement along the same row (horizontal).
+
+	Examples:
+
+	Rook at (4, 4):
+	Valid Moves:
+
+	Horizontal: (0, 4), (7, 4), etc.
+	Vertical: (4, 0), (4, 7), etc.
+
+	Invalid Moves:
+	(3, 3) (diagonal).
+
+@@ Method: movecollideWithPiece
+
+it will handle situation like rook can move another end of column or row if there are pieces in between.
+
+so we need to check in  direction for collison.
+
+	Logic Breakdown:
+
+	//Horizontal Checks:
+
+	Left:
+	If the target column is to the left of the Rook's current column (this.col > col), iterate over all squares in between (this.col - 1 to col).
+	Return true if any square contains a piece.
+
+	Right:
+	Similar logic for squares to the right (this.col < col).
+
+
+	//Vertical Checks:
+
+	Up:
+	If the target row is above the Rook's current row (this.row > row), iterate over all squares in between (this.row - 1 to row).
+	Return true if any square contains a piece.
+
+	Down:
+	Similar logic for squares below (this.row < row).
+
+	//Edge Cases:
+
+	If the Rook is adjacent to the target square, no intermediate squares exist, so no collision is possible.
+
+	Examples:
+
+	Rook at (4, 4):
+	Target: (4, 7) (down).
+
+	If squares (4, 5) and (4, 6) are empty, no collision.
+	If any of these squares contain a piece, the method returns true.
+	Target: (0, 4) (left).
+
+	If squares (3, 4), (2, 4), and (1, 4) are empty, no collision.
+	If any of these squares contain a piece, the method returns true.

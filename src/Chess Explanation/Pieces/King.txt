@@ -1,0 +1,69 @@
+King piece is a highest priority of the chess game and can move only in forward, neighbour, diagonally by one only.
+
+@@ Package and import
+
+it is a part of piece package and it import board and move class for placing king in board and enable it to move and also bufferimage to get the king symbol from piece image.
+
+
+@@ Class and constructer
+
+king class extends piece class to define its structure and create a constructer to get all variable as argument and assign them with current value .
+	 
+	Getting subimage:
+	sheet.getSubimage(...): Extracts the King's image from the sprite sheet.
+	
+	(isWhite ? 0 : sheetscale): Selects the row of the sprite sheet based on 	color (white pieces are in the first row, black in the second).
+	
+	.getScaledInstance(...): Scales the image to fit the board's tile size
+
+@@ Method: isValidMovement
+
+it ensure that if king can move or not currently on the board.
+
+the logic behind it is divdie in three part:
+	if king can diagonally move or not
+	if king can move vertically or not
+	if king can castel or not
+
+if either of them are true than king can move.
+
+Example:
+
+	Combined Example:
+	Initial Position: King at (4, 4).
+
+	Diagonal Move: Target position (5, 5).
+	Both row and column change by 1.
+	Valid diagonal move.
+
+	Vertical Move: Target position (4, 5).
+	Only row changes by 1.
+	Valid vertical move.
+
+	Castling: King at (4, 0), target position (6, 0), and Rook at (7, 0).
+	All castling conditions satisfied.
+	Valid castling move.
+
+
+@@ Method:canCastel
+this method check whether king can still castel because in some cases the king is being checked if he castel or the rook already move from it postion so in this situation catseling is not possible.
+
+the logic is that the king can castel on same row and either left or right.
+
+Castling to the Right (col == 6):
+	Retrieves the rook at position (7, samerow).
+Checks:
+	The rook exists (rook != null).
+	The rook and King have not moved before (rook.isFirstMove && isFirstMove).
+	The squares between King and rook (5, row) and (6, row) are empty.
+	The King does not pass through a checked square (!		board.checkSacnner.isKingChecked(...)).
+
+Castling to the Left (col == 2):
+	Retrieves the rook at position (0, row).
+Checks:
+	The rook exists.
+	Neither the rook nor the King has moved.
+	Squares (1, row), (2, row), and (3, row) are empty.
+	The King does not pass through a checked square.
+Return:
+	Returns true if all conditions are satisfied for the chosen castling move.

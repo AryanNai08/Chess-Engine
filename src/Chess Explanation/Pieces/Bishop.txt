@@ -1,0 +1,68 @@
+Bishop is a part of the royal family which move diagonally on the chess board
+
+@@ Package and imports
+
+its a part of Piece package and import awt,bufferimage to get the bishop piece/symbol from the pieces.png image.
+
+@@ Class and constructer
+
+bishop class extends Pieces class which we have created previously for define structure of the bishop piece and create a constructer  get all variable as a parameter and assign current value to them.
+
+	@@Get subimage fro the image
+	
+	Extracts the image (sprite) of the Bishop from the sprite sheet.
+
+	The coordinates (2 * sheetscale, isWhite ? 0 : sheetscale) pick the correct 	part of the sprite sheet for a white or black bishop.
+
+	getScaledInstance resizes the sprite to match the board’s tile size smoothly.
+
+@@ Method : isValidMovement
+
+Checks if the move is valid for a Bishop.
+
+A Bishop moves diagonally, meaning the absolute difference between the current column and the target column must equal the absolute difference between the current row and the target row.
+
+Returns true if the move is valid; otherwise, false.
+
+Example:
+	Imagine the bishop is at position (2, 2) on an 8x8 chessboard (zero-based indexing).
+
+	Scenario: Moving to (4, 4)
+	Input:
+
+	Current position: (2, 2) (i.e., this.col = 2 and this.row = 2).
+	Target position: (4, 4) (i.e., col = 4 and row = 4).
+	Calculate Differences:
+
+	Math.abs(this.col - col) → Math.abs(2 - 4) → 2.
+	Math.abs(this.row - row) → Math.abs(2 - 4) → 2.
+	Comparison:
+
+	Math.abs(this.col - col) == Math.abs(this.row - row) → 2 == 2 → true.
+	Result:
+
+	The move is valid because the bishop moves diagonally from (2, 2) to (4, 4).
+
+@@ Method: moveCollidesWithPiece
+
+it Checks if there are any pieces blocking the Bishop's path during its diagonal movement.so there are genrally for way a bishop move from current postion either up left, up right,down left ,down right . so calculate each case
+
+
+//Upleft
+
+If the target is diagonally up-left:
+	Loops through each tile in the path from the current position to the target.
+	Checks if there is a piece (getPiece) on any tile in the path. If found, returns true (collision)
+
+//Upright
+
+If the target is diagonally up-right:
+
+	Similar logic as the up-left case, adjusting for the direction(this.col<col)
+
+//Downleft and down right
+
+	If the target is diagonally down-left or down-right:
+	Checks for collisions along this direction.
+
+or nothing return than return false by default

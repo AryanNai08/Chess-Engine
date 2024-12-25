@@ -1,0 +1,31 @@
+Move class store the information of every pieces by attribute like oldcol,oldrow,newcol,newrow and what piece it is and what piece it capture.
+
+
+@@ Package and import
+
+it is a part of Main package and it import piece package Piece class to use it as a reference object to store information.
+
+
+@@ Class ,Variable and Constructer
+
+Move class create variable like :
+	int oldCol:
+	The column index of the piece before the move.
+
+	int oldRow:
+	The row index of the piece before the move.
+
+	int newCol:
+	The target column index of the move.
+
+	int newRow:
+	The target row index of the move.
+
+	Piece piece:
+	A reference to the piece being moved.
+
+	Piece capture:
+	A reference to the piece that is captured during the move, if any.
+	null if no piece is captured.
+
+it created a constructer and pass all the current value to assign val to the created variable that pass by argument.

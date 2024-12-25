@@ -1,0 +1,45 @@
+Knight is a part of royal family which move in l shape direction.
+
+
+@@ Package and Imports
+
+Knight class is a part of piece package and it import the board class to place it piece on the board and the bufferImage to get the knight symbol form the piece image
+
+
+@@ Class and constructer
+
+knight class extends piece class and create constructer and use all variable of piece class as argument to define its structure.
+
+	Subimage
+	Retrieves the Knight's image from the sprite sheet.
+
+	The position on the sprite sheet is determined by:
+	3 * sheetscale: The Knight's specific column in the sprite sheet.
+
+	isWhite ? 0 : sheetscale: Selects the top row for white pieces or the bottom 	row for black pieces.
+
+	The image is then scaled to fit the size of a board tile.
+
+@@ Method:isValidMovement
+
+this method ensure that knight move in correct order
+
+the logic is like that if the value of targeted col - current col * targeted row - current row is equal to 2 than its a vaild move
+
+Example:
+	Example:
+
+	Initial Position: (4, 4)
+	Target Position 1: (6, 5) (two steps right, one step up)
+	Calculation:
+	Math.abs(6 - 4) * Math.abs(5 - 4) = 2 * 1 = 2
+	Valid move.
+	Target Position 2: (5, 6) (one step right, two steps up)
+	Calculation:
+	Math.abs(5 - 4) * Math.abs(6 - 4) = 1 * 2 = 2
+	Valid move.
+	Invalid Example:
+	Target Position: (5, 5) (one step diagonally)
+	Calculation:
+	Math.abs(5 - 4) * Math.abs(5 - 4) = 1 * 1 = 1
+	Invalid move.

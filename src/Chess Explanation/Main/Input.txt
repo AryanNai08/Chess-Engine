@@ -1,0 +1,48 @@
+The Input class handles user interactions with the chessboard. It extends MouseAdapter to manage mouse events such as pressing, dragging, and releasing. These events facilitate piece selection, movement, and placement on the board.
+
+
+@@ package and imports
+it is a part of Main package and it imports mouseAdapter to track the data of user mouse movement.
+
+
+@@Class and constructer
+
+the Input class extends mousadapter class to avoid the override of all the methods and not to make class abstract.
+
+the constructer is created in which the board object is pass as argumnent to study its mouse movements.
+
+@@Method:MousePressed
+
+Detects when the user clicks on a square.
+Selects the piece located at the clicked position.
+
+logic:
+Calculates the column (col) and row (row) from the mouse coordinates:
+Retrieves the piece at the calculated position using board.getPiece(col, row).
+If a piece exists at the position, it is stored in board.selectedPiece.
+
+
+@@Method:MouseDragged
+
+Allows the user to drag a selected piece visually across the board.
+
+logic:
+Checks if a piece is selected (board.selectedPiece != null).
+Updates the piece's visual position (xPos, yPos) to follow the mouse
+Calls board.repaint() to refresh the board display.
+
+@@Method:MouseReleased
+
+Handles piece placement when the user releases the mouse.
+
+logic:
+Calculates the release position (col, row).
+Creates a Move object for the attempted move
+Validates the move using board.isValidMove(move)
+
+	Valid Move:
+	Calls board.makeMove(move) to execute the move.
+
+	Invalid Move:
+	Resets the piece to its original position
+	Clears the selected piece (board.selectedPiece = null) and repaints the 	board.

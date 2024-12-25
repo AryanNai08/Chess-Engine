@@ -1,0 +1,80 @@
+There are 8 pawn on each side of the color and it is not a part of royal family but if we move it accordingly than it promote to the royal family part.
+pawn can only move forward, 2 steps forward if its pawn first move and after that only one step forward. it will hunt by diagonally increment itsel.
+
+@@ Package and Import
+Pawn is a part of piece package and it import board to add piece to the board bufferImage to get the pawn symbol from the piece image.
+
+@@ Class and constructer
+
+Pawn class extends piece class and create constructer and use all variable of piece class as argument to define its structure.
+	
+	Subimage:
+	this.sprite:
+
+	Extracts the Pawn's image from the sprite sheet and scales it to fit the board's tile size.
+	Uses 5 * sheetscale to select the correct image for a Pawn from the sprite sheet.
+
+@@ Method: isValidMovement
+This method ensure that pawn can make make move in correct order.
+
+so basically the logic for pawn is divided in to six part or it can move in this of six part as follow:
+
+	int colorIndex = isWhite ? 1 : -1;:
+
+	Determines the Pawn's movement direction.
+	White Pawns move "up" the board (negative rows, hence 1).
+	Black Pawns move "down" the board (positive rows, hence -1).	
+
+	// push pawn 1
+	Pawns move one step forward (in their movement direction) if the target square is empty.
+	Example:
+
+	White Pawn at (4, 6):
+	Moves to (4, 5) (row decreases by 1).
+
+
+
+	// push pawn 2
+	Pawns can move two squares forward from their starting row if both squares are empty.
+	Example:
+
+	White Pawn at (4, 6):
+	Moves to (4, 4) if (4, 5) and (4, 4) are empty.
+
+
+
+	// capture left
+	Pawns can capture an opponent's piece one square diagonally to the left.
+	Example:
+	
+	White Pawn at (4, 5):
+	Captures at (3, 4) if an opponent's piece is there.
+
+
+
+	// capture right
+	Similar to the left capture but diagonally to the right.
+	Example:
+
+	White Pawn at (4, 5):
+	Captures at (5, 4) if an opponent's piece is there.
+
+
+
+	// En passant left and right
+
+	En passant is a specific rule you search it on google for more information.
+
+	Special chess rule allowing Pawns to capture an opponent's Pawn that has moved two squares forward from its starting row.
+	Example:
+
+	White Pawn at (4, 4):
+	Captures a Black Pawn that moved from (5, 6) to (5, 4) via En Passant.
+
+
+
+	//Invalid Move:
+
+	If none of the above conditions are met, the move is invalid.
+
+	

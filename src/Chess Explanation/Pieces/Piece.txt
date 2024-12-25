@@ -1,0 +1,59 @@
+Piece class is the part of the Pieces package which is used to define the structure of every pieces like how they move  row and col wise and many more.
+
+@@ Imports
+
+necessary import are awt,io,imageio for using graphics and to handle the input exception and the get the image/symbol of every single pieces
+
+
+@@ Variables
+
+col, row: Represents the column and row position of the piece on the board.
+
+xPos, yPos: The x and y coordinates of the piece's graphical position on the screen.
+
+isWhite: A boolean indicating whether the piece is white (true) or black (false).
+
+name: Stores the name of the chess piece (e.g., "Pawn", "Knight").
+
+value: Represents the relative value of the piece (used for evaluation or AI). // currently not in use but may used in future.
+
+
+isFirstMove: Tracks whether the piece has made its first move, important for rules like pawn's two-step move or castling.
+
+
+@@ Image Sheet Loading
+
+BufferedImage sheet: Holds the image file containing sprites for all the chess pieces.
+
+
+Initialization Block:
+
+Uses ImageIO.read() to load an image file named pieces.png from the classpath. This file contains the graphical representations of all pieces.
+
+If loading fails, it catches the IOException and prints the error using e.printStackTrace().
+
+
+@@ Image Scaling
+
+Calculates the width of a single piece sprite by dividing the total image objects by 6 (assume the sprite sheet has 6 columns for different pieces).
+
+@@ Sprite Image
+
+Holds the scaled image of the specific chess piece to be displayed on the board.
+
+@@ Constructer
+
+it will Accepts a Board object as an argument and assigns it to the board instance variable.
+This ensures every Piece knows which Board it belongs to.
+
+@@ Movement Validation
+
+this method ensure that particular piece can go the specific row and col or not.
+
+@@ Collision Detection
+
+this method is use to ensure that any piece not parse any other piece that is in their way. eg(pawn can not move forward because their is queen ahead).
+
+@@ Painting the Piece
+
+this method paint the pieces on the chess board.

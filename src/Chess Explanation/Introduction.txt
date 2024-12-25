@@ -1,0 +1,37 @@
+!!Chess is a two player game where there are royal pieces and pawns of white and black and both player take alternative turns to win the game.
+
+!!i try to built chess engine  using java and use IntelliJ as a ide .
+
+!! the code of whole chess engine is divided in 3 pacakages name Main,Pieces and Res.
+
+>> Main package contain the  framework to build the chess board and the setup and movement of each and every pieces.
+
+>>Pieces package contain class of each and every pieces which enables the movement of the pieces on the chessboard and it handle the pieces area where they move. Inshort this package contain build of each and every pieces.
+
+>> Res package contain a image in which there are logo/symbol of each and every pieces of black and white which are use to display on chessboard.
+
+
+@@ Mainlly i will show you the directory structure for better understanding of the code.
+	
+	
+	Main
+	>Board.java
+	>CheckScanner.java
+	>Input.java
+	>Main.java
+	>Move.java
+
+	Pieces
+	>Bishop.java
+	>King.java
+	>Knight.java
+	>Pawn.java
+	>Piece.java
+	>Queen.java
+	>Room.java
+	
+	Res
+	>pieces.png
+
+<<for detail explanation plz view other folder!! 
+

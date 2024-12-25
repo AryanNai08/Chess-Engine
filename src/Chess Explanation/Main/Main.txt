@@ -1,0 +1,2 @@
+Main.java is the base of the code which contain creation of frame and its layout details .
+it describe the frame dimension and the chessboard is added on the frame.

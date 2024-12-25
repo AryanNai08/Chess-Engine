@@ -1,0 +1,341 @@
+board class is the most important class for the chess engine code because it contain multiple methods to handles different movements on the chess board. so make sure to analyse this class explanation carefully.
+
+
+@@ Package and import
+
+it is a part of Main package and its import Pieces package to use their class method for further development of the game . it also import awt,swing for jpanel
+
+@@ Class,Variable and constructer
+
+The Board class extends JPanel, making it a GUI component that can be displayed in a window.
+It represents the chessboard and holds all game logic, piece management, and user interactions
+
+	Chess board configuration:
+
+	fenStringPostion: The board's initial state is represented in FEN (Forsyth-	Edwards Notation), which encodes the positions of pieces, active color, 	castling rights, en passant square, halfmove clock, and fullmove number.
+
+	titlesize: Each square's dimension is set to 85 pixels, ensuring a visually 	proportional chessboard.
+	
+	cols and rows: Constants for an 8x8 chessboard grid.
+
+
+	Variables:
+
+	checkedKing, checkedKingCol, checkedKingRow: Store the king information under check, if any, along with its position.
+	
+	pieceList: A  Arraylist containing all the pieces currently on the board.
+	
+	selectedPiece: Keeps track of the currently selected piece during a move.
+	
+	input: An instance of the Input class, handling user input like mouse clicks and drags.
+	
+	checkSacnner: it is Responsible for scanning whether a king is in check.
+	
+	enPassantTile: Represents a tile index for en passant captures (-1 if not applicable).
+	
+	isWhitetoMove: Tracks the turn; true means white to move, false means black.
+	
+	isGameOver: A flag to determine if the game has ended
+
+
+	Constructer:
+
+	setPreferredSize: Ensures the board's size is proportional to its grid dimensions and titlesize.
+	
+	addMouseListener/addMouseMotionListener: Listens for mouse events to select and move pieces.
+
+	loadPositionFromFEN: Parses the FEN string to initialize the board and pieces.
+
+@@ Fetching pieces
+
+this is use  to find a piece in the chess board.
+
+	Loops through the pieceList to find a piece matching the specified column and row.
+
+	Returns the piece if found; otherwise, returns null.
+	
+
+@@ Method: Making Move
+
+this method is use to move the pieces and store there new postion in the board and also responsible for capture the pieces and for pawn 2+ and 1+ move and for king move in chess board for theirs unique rule of castel and en pasent.
+
+	Special logic for pawns (movePawn) and kings (moveKing) due to their unique rules.
+	
+	Updates the piece’s position (col, row, xPos, yPos) on the board.
+	
+	Marks the piece as having moved (isFirstMove = false).
+	
+	Captures any piece present at the target position using capture.
+	
+	Toggles the turn (isWhitetoMove).
+	
+	Calls updateGameState to check for game-ending conditions (e.g., checkmate).
+
+
+@@ Method: Move King
+
+this method is used for castel the king .
+
+	If the king moves two spaces horizontally, it’s a castling move.
+
+	Finds the corresponding rook (either at column 7 or column 0).
+
+	Updates the rook’s position (col, xPos) to complete the castling.
+
+
+	
+@@ Method: Move Pawn
+
+it  Handles special rules for pawn movement, including en passant and promotions.
+
+	En passant:
+
+	If the destination tile matches the en passant tile, the captured piece is 	set to the pawn that is being captured.
+
+	Sets the en passant tile for the opponent's move if the pawn moves two 	steps forward.
+
+	Promotion:
+
+	Checks if the pawn reaches the last row (row 0 for black, row 7 for white). 	If so, calls promotePawn() to allow the player to select a new piece (e.g., 	Queen, Rook).
+
+
+@@ Method:PromotePawn
+
+it Promotes a pawn that reaches the last row to another piece, promotion  chosen by the player.
+
+	Displays a dialog box with options to choose the promotion piece (Queen, 	Rook, Bishop, or Knight).
+
+	Based on the player's selection, creates a new piece (e.g., Queen, Rook) at 	the pawn's location.
+
+	If no selection is made, defaults to promoting the pawn to a Queen.
+
+	Removes the pawn from the board by calling capture().
+
+@@ Method : Capture
+
+this method Removes a piece from the board.
+
+
+	Removes the specified piece from the pieceList. This method is used for 	capturing opponents' pieces or removing pawns during promotion.
+
+@@ Method: isValidMove
+
+ it Determines if a move is valid for a given piece.
+
+
+	Checks the game state:
+	
+	Ensures the game is not over.
+	Verifies that the piece belongs to the current player (white's turn or black's turn).
+
+	Piece movement validation:
+	
+	Ensures the destination tile is not occupied by a friendly piece (sameTeam()).
+
+	Checks if the move follows the piece's movement rules (isValidMovement()).
+
+	Verifies that no pieces block the path (moveCollidesWithPiece()).
+	
+	Prevents moves that would place the king in check (checkScanner.isKingChecked())
+
+
+@@ Method: sameteam
+
+Checks if two pieces belong to the same team.
+
+
+
+	Returns false if either piece is null or if they belong to opposing teams. Otherwise, returns true (both pieces are on the same team).
+
+@@ Method : GetTileNum
+
+it Converts a tile's (col, row) coordinates into a single number. its used for en passent you can google for more information.
+
+
+	This method is used for indexing purposes, e.g., storing the en passant tile. It calculates the unique tile number as row * rows + col. its unique equation for 	indexing although there are many alternative solution but i came up with this.
+
+@@ Method:FindKing
+
+Finds the king piece for a specified color (white or black).
+
+	Iterates through the pieceList to find the king of the given color (isWhite == true for white, false for black).
+	Returns the king piece or null if no king is found (should not happen but still for worst case !)
+
+@@ Method:loadPostionFromFen
+
+This method sets up the chessboard by parsing a FEN (Forsyth-Edwards Notation) string. The FEN format represents the state of a chess game, including the position of pieces, turn, castling rights, en passant square, and move counters.
+
+	Clear Current Board State:
+
+	pieceList.clear(); ensures the board starts fresh without existing pieces.
+
+	Parse the FEN String:
+
+	Split the FEN string into components using split(" ").
+	parts[0]: Piece placement.
+	parts[1]: Side to move.
+	parts[2]: Castling availability.
+	parts[3]: En passant target square.
+	Initialize row and col to iterate over the board.
+
+	Set Up Pieces (parts[0]):
+
+	Loop through the piece placement string:
+	If / is encountered, move to the next row and reset the column.
+	If a digit is encountered, skip that many empty squares.
+	For piece characters (e.g., R, n), determine color (uppercase = white) and type. Instantiate the piece and add it to pieceList.
+	
+	Set the Color to Move (parts[1]):
+
+	Assign isWhitetoMove based on whether the FEN indicates white's (w) or black's (b) turn.
+
+	Set Castling Rights (parts[2]):
+
+	Use getPiece to find rooks at initial positions and set their isFirstMove based on the FEN.
+	
+	Set En Passant Target Square (parts[3]):
+
+	Convert the en passant square notation (e.g., e3) into a tile index or assign -1 if en passant is unavailable
+
+@@ Method:UpdateGamestate
+
+To update the state of the game by checking for special conditions like check, checkmate, stalemate, or insufficient material. It also handles UI updates for highlighting and results.
+
+
+	Find the Current Player's King:
+
+	Use the findKing(isWhitetoMove) method to locate the king of the side to move.
+	
+	Check for Game Over:
+
+	Call checkSacnner.isGameOver(king):
+
+	If true, check whether the king is in check using isKingChecked.
+
+	Depending on the result:
+	
+	Display "Win" if the king is checked.
+	
+	Display "Stalemate" otherwise.
+
+	If both players have insufficient material (insufficentMaterial(true) and insufficentMaterial(false)), declare the game over.
+
+	Handle King Under Check:
+
+	If the king is checked, mark its position for UI purposes.
+	
+	Otherwise, clear any previous check highlights.
+
+	Repaint the Board:
+
+	Call repaint() to visually update the board
+
+@@ Method : resetGame
+
+it is used to reset the game to its inital position after the game end.
+
+
+	fenStringPostion = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+	Sets the FEN (Forsyth–Edwards Notation) string to represent the initial chessboard setup.
+	
+	"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR": This part represents the board layout.
+	
+	"w KQkq - 0 1": Indicates white's turn, castling rights, and game state.
+
+
+	loadPostionFromFEN(fenStringPostion);
+
+	Parses the FEN string and updates the board's state to match the initial position.
+
+
+	Reset variables:
+
+	selectedPiece = null;: Deselects any selected piece.
+
+	isWhitetoMove = true;: Sets the turn to white.
+
+	isGameOver = false;: Resets the game-over state.
+
+	checkedKingCol = -1; checkedKingRow = -1;: Clears any check highlights.
+
+	enPassantTile = -1;: Resets en passant square.
+
+
+	repaint();
+	
+	Triggers a redraw of the chessboard to reflect the reset state.
+
+
+@@Method: insufficentMaterial
+
+	Checks if there is insufficient material to continue the game for the given color:
+
+	pieceList.stream()
+
+	Streams all pieces currently on the board.
+
+	filter(piece -> piece.isWhite == isWhite)
+
+	Filters the list to include only pieces of the specified color (isWhite).
+
+	map(piece -> piece.name)
+
+	Transforms the list to only include the names of the pieces.
+
+	collect(Collectors.toCollection(ArrayList::new));
+
+	Collects the filtered piece names into an ArrayList.
+
+	
+
+	Logic:
+
+	if (names.contains("Queen") || names.contains("Rook") || names.contains("Pawn")): If there are queens, rooks, or pawns, return false (material is sufficient).
+
+	return names.size() < 3;: If the list has fewer than 3 pieces, return true (insufficient material).
+
+@@ Method:paintComponent
+
+Responsible for rendering the chessboard, valid moves, and pieces.
+
+	Chessboard rendering:
+	
+	Loop through rows and columns:
+
+	for (int r = 0; r < rows; r++) { for (int c = 0; c < cols; c++) {
+
+	Iterates over all board squares.
+
+	Highlight the king's square when in check:
+
+	if (r == checkedKingRow && c == checkedKingCol): If the current square matches the king's position, fill it with a semi-transparent red color.
+
+	
+	
+	Paint alternating squares:
+
+	boolean isLightSquare = (r + c) % 2 == 0;
+
+	Determines the square's color (light or dark).
+	
+	g2d.setColor(isLightSquare ? new Color(227, 198, 181) : new Color(157, 105, 53));
+
+	Sets the color for the square (light tan or brown).
+
+	
+	
+	Row and column labels:
+
+	Row numbers (left side):
+
+	if (c == 0): Add numbers only in the first column.
+
+	g2d.drawString(rowNumber, c * titlesize + 5, r * titlesize + 15);: Position numbers in the upper-left corner of the square.
+	
+	Column letters (bottom):
+	
+	if (r == rows - 1): Add letters only in the last row.
+	
+	g2d.drawString(colLetter, c * titlesize + titlesize - 12, r * titlesize + titlesize - 5);: Position letters in the bottom-right corner of the square.
+

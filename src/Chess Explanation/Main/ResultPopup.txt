@@ -1,0 +1,43 @@
+Resultpopup class is used to generate a popup for match result and it provide button like ok for ending game and play again button to reset the game and play again.
+
+@@ package and import
+resultpop is a part of a Main package and its import awt and swing package for adding popup menu using framework.
+
+@@ Method:ShowResult
+
+Parameters:
+
+	resultMessage: The message to display in the popup, such as "Player 1 Wins!" or "It's a Draw!".
+	board: The Board object representing the current game state, used for resetting the game.
+
+Dialog Creation:
+
+	A JDialog object is created to display the popup.
+	setTitle: Sets the title of the dialog to "Game Result".
+	setLayout: Uses BorderLayout to organize components.
+
+Message Display:
+
+	A JLabel is used to show the result message.
+
+The label:
+	Centers the text (SwingConstants.CENTER).
+	Uses a bold Arial font with a size of 18.
+	Sets the text color to green (new Color(34, 139, 34)), representing a positive result (e.g., winning).
+
+Button Panel:
+
+	A JPanel with FlowLayout organizes the buttons.
+
+Two buttons are added:
+	OK Button:
+	Closes the popup when clicked (dialog.dispose()).
+
+	Play Again Button:
+	Resets the game using the board.resetGame() method.
+Closes the popup after resetting.
+
+Final Setup:
+
+	dialog.setModal(true): Ensures the popup blocks interaction with the main application until closed.
+	dialog.setVisible(true): Displays the dialog.
