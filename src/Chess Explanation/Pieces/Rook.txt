@@ -1,81 +1,63 @@
-Rook is the part of royal family and the second most important part of the game after the queen. the rook can move in both horizontal and vertical direction.
-
+The Rook is part of the royal family in chess and is considered one of the most powerful pieces after the Queen. The Rook can move both horizontally and vertically across the board, as long as there are no obstacles in its path.
 
 @@ Package and Import
+The Rook class is part of the pieces package and imports:
 
-Rook is a part of piece package and it import board to add piece to the board bufferImage to get the pawn symbol from the piece image.
+Board: To add the piece to the board and access the board's tiles.
+BufferedImage: To retrieve and scale the Rook's sprite from the sprite sheet.
 
+@@ Class and Constructor
+The Rook class extends the Piece class and uses its parent class's variables as arguments in the constructor to define its structure. The constructor initializes:
 
-@@ Class and constructer
+col and row: The Rook's starting position.
+xPos and yPos: Pixel coordinates on the board, based on the tile size.
+isWhite: Indicates if the Rook is a white or black piece.
+name: Sets the piece's name as "Rook."
 
-Rook class extends piece class and create constructer and use all variable of piece class as argument to define its structure.
-	
-	Subimage:
-	this.sprite:
+Extracts the Rook's image from the sprite sheet using 4 * sheetscale to locate the Rook's position on the sheet.
+Scales the image to fit the tile size of the board.
 
-	Extracts the Pawn's image from the sprite sheet and scales it to fit the 	board's tile size.
-	Uses 4 * sheetscale to select the correct image for a Pawn from the sprite 	sheet.
+@@ Method: isValidMovement
+This method ensures the Rook can move along a straight line in either the horizontal (same row) or vertical (same column) direction, provided there are no obstacles in its path.
 
+Logic:
+this.col == col: Validates movement along the same column (vertical).
+this.row == row: Validates movement along the same row (horizontal).
+If the above conditions are met, it further checks for any obstacles using the moveCollidesWithPiece method.
+Examples:
+If the Rook is at position (4, 4):
 
-@@ Method: isValidMovement 
+Valid Moves:
+Horizontal: (0, 4), (7, 4), etc.
+Vertical: (4, 0), (4, 7), etc.
+Invalid Moves:
+Diagonal: (3, 3), (5, 5), etc.
+@@ Method: moveCollidesWithPiece
+This method handles situations where the Rook moves to another end of its row or column but may encounter other pieces in between. It checks for collisions in all four directions.
 
-this method ensure that rook can move anywhere in same column(horizontal) and same row(vertical) if there is no obsticals in between.
+Logic Breakdown:
 
-	Logic:
+    Horizontal Checks:
 
-	this.col == col: Movement along the same column (vertical).
-	this.row == row: Movement along the same row (horizontal).
+    Left:
+        If the target column is to the left of the Rook's current column (this.col > col), iterate through all squares between this.col - 1 and col.
+        Return true if any square contains a piece.
 
-	Examples:
-
-	Rook at (4, 4):
-	Valid Moves:
-
-	Horizontal: (0, 4), (7, 4), etc.
-	Vertical: (4, 0), (4, 7), etc.
-
-	Invalid Moves:
-	(3, 3) (diagonal).
-
-@@ Method: movecollideWithPiece
-
-it will handle situation like rook can move another end of column or row if there are pieces in between.
-
-so we need to check in  direction for collison.
-
-	Logic Breakdown:
-
-	//Horizontal Checks:
-
-	Left:
-	If the target column is to the left of the Rook's current column (this.col > col), iterate over all squares in between (this.col - 1 to col).
-	Return true if any square contains a piece.
-
-	Right:
-	Similar logic for squares to the right (this.col < col).
+    Right:
+        If the target column is to the right (this.col < col), iterate through squares between this.col + 1 and col.
+        Return true if any square contains a piece.
 
 
-	//Vertical Checks:
+    Vertical Checks:
 
-	Up:
-	If the target row is above the Rook's current row (this.row > row), iterate over all squares in between (this.row - 1 to row).
-	Return true if any square contains a piece.
+    Up:
+        If the target row is above the Rook's current row (this.row > row), iterate through squares between this.row - 1 and row.
+        Return true if any square contains a piece.
 
-	Down:
-	Similar logic for squares below (this.row < row).
+    Down:
+        If the target row is below (this.row < row), iterate through squares between this.row + 1 and row.
+        Return true if any square contains a piece.
 
-	//Edge Cases:
-
-	If the Rook is adjacent to the target square, no intermediate squares exist, so no collision is possible.
-
-	Examples:
-
-	Rook at (4, 4):
-	Target: (4, 7) (down).
-
-	If squares (4, 5) and (4, 6) are empty, no collision.
-	If any of these squares contain a piece, the method returns true.
-	Target: (0, 4) (left).
-
-	If squares (3, 4), (2, 4), and (1, 4) are empty, no collision.
-	If any of these squares contain a piece, the method returns true.
+    Edge Cases:
+        If the Rook is adjacent to the target square, there are no intermediate squares, and no collision is possible.
+        If the target square is occupied by a friendly piece, the method returns true (Rook cannot capture its own piece).
